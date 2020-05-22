@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-class HomepageController {
+class HomepageController extends AbstractController {
     public static function index() {
-        echo "Voici la page d'accueil";
+        echo self::getTwig()->render('accueil.html');
     }
 };
 

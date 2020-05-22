@@ -10,7 +10,7 @@ use App\Model\AnimalQuery;
 class AnimalController extends AbstractController {
 
     static public function listOne($id) : Animal {
-        $animalQuery = new AnimalQuery();
+        $animalQuery = new AnimalQuery('animal', $id);
         return $animalQuery->findOne($id);
     }
 
@@ -24,7 +24,7 @@ class AnimalController extends AbstractController {
     }
 
     static public function listAll() : void {
-        $animalQuery = new AnimalQuery();
+        $animalQuery = new AnimalQuery('animal', ['*']);
         $animals = $animalQuery->findAll();
 
         echo self::getTwig()->render('animal/index.html', [

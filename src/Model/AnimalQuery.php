@@ -1,20 +1,29 @@
 <?php 
-// mode strict
-declare(strict_types=1);
 
 namespace App\Model;
 use PDO;
 
-class AnimalQuery {
+class AnimalQuery extends SelectQuery
+{
+    /** var SelectQuery */
+    // private $_selectQuery;
 
-    public function getPdo() : PDO {
+    public function __construct(string $tableName, array $tableFields = ['*'])
+    {   
+        parent::__construct($tableName, $tableFields);
+        // $this->_selectQuery = new SelectQuery($tableName, $tableFields);
+    }
+
+    public function getPdo() : PDO 
+    {
         return new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
         ]);
     }
 
-    public function findOne($id) : Animal {
+    public function findOne(int $id) : Animal 
+    {
         $bdd = $this->getPdo();
 
         $query = 'SELECT * FROM animal WHERE id = :id';
@@ -32,10 +41,11 @@ class AnimalQuery {
         return new Animal((int) $animalData['id'], $animalData['species'], $animalData['country']);
     }
 
-    public function findAll() : array {
+    public function findAll() : array 
+    {
         $bdd = $this->getPdo();
+        $query = $this->createQuery();
 
-        $query = 'SELECT * FROM animal';
         $statement = $bdd->prepare($query);
         $statement->execute();
 
@@ -54,7 +64,8 @@ class AnimalQuery {
         
     }
 
-    public function createOne($species, $country){
+    public function createOne(string $species, string $country)
+    {
         $bdd = $this->getPdo();
 
         $query = 'INSERT INTO animal (species, country) VALUES(:species, :country)';
@@ -65,7 +76,8 @@ class AnimalQuery {
         ]);
     }
     
-    public function updateOne($species, $country, $id) {
+    public function updateOne(string $species, string $country, int $id) 
+    {
         $bdd = $this->getPdo();
 
         $query = 'UPDATE animal SET species=:species, country=:country WHERE id=:id';

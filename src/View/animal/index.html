@@ -5,12 +5,16 @@
 <h1>Bienvenue sur la page des animaux</h1>
 <p>voici tous les animaux existants :</p>
 
-<ul>
-    {% for animal in animals %}
-        <li>{{ animal.species }} (origine: {{ animal.country }})</li>
-        <li><a href="{{ base_path ~ 'animal/' ~ animal.id }}">Voir</a></li>
-        <li><a href="{{ base_path ~ 'animal/edit/' ~ animal.id }}">Edit</a></li>
-    {% endfor %}
+{% for animal in animals %}
+<ul sytle="margin-bottom: 20px">
+    <li><h3>{{ animal.species }} (origine: {{ animal.country }})</h3></li>
+    <li><a href="{{ base_path ~ 'animal/' ~ animal.id }}">Voir</a></li>
+    <li><a href="{{ base_path ~ 'animal/edit/' ~ animal.id }}">Edit</a></li>
+    <li><a href="{{ base_path ~ 'animal/delete/' ~ animal.id }}">Supprimer</a></li>
 </ul>
+{% endfor %}
+
+<a href="{{ base_path ~ '/' }}">Retour à l'accueil</a>
+<a href="{{ base_path ~ '/animal/new' }}">Ajouter un animal</a>
 
 {% endblock %}
