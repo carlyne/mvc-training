@@ -8,6 +8,8 @@
 <ul>
     {% for animal in animals %}
         <li>{{ animal.species }} (origine: {{ animal.country }})</li>
+        <li><a href="{{ base_path ~ 'animal/' ~ animal.id }}">Voir</a></li>
+        <li><a href="{{ base_path ~ 'animal/edit/' ~ animal.id }}">Edit</a></li>
     {% endfor %}
 </ul>
 

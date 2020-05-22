@@ -54,7 +54,28 @@ class AnimalQuery {
         
     }
 
+    public function createOne($species, $country){
+        $bdd = $this->getPdo();
 
+        $query = 'INSERT INTO animal (species, country) VALUES(:species, :country)';
+        $statement = $bdd->prepare($query);
+        return $statement->execute([
+            ':species' => $species,
+            ':country' => $country
+        ]);
+    }
+    
+    public function updateOne($species, $country, $id) {
+        $bdd = $this->getPdo();
+
+        $query = 'UPDATE animal SET species=:species, country=:country WHERE id=:id';
+        $statement = $bdd->prepare($query);
+        return $statement->execute([
+            ':species' => $species,
+            ':country' => $country,
+            ':id' => $id
+        ]);
+    }
 };
 
 ?>

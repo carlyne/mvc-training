@@ -9,27 +9,61 @@ use App\Model\AnimalQuery;
 
 class AnimalController extends AbstractController {
 
-    static public function show($id) {
+    static public function listOne($id) : Animal {
         $animalQuery = new AnimalQuery();
-        $animal = $animalQuery->findOne($id);
+        return $animalQuery->findOne($id);
+    }
+
+    static public function show($id) : void {
+        $animal = self::listOne($id);
 
         echo self::getTwig()->render(
             'animal/show.html',
             ['animal' => $animal]
         );
-
-        var_dump($animal);
     }
 
     static public function listAll() : void {
         $animalQuery = new AnimalQuery();
         $animals = $animalQuery->findAll();
 
-        var_dump($animals);
-
         echo self::getTwig()->render('animal/index.html', [
             'animals' => $animals
         ]);
+    }
+
+    static public function new() : void {
+        echo self::getTwig()->render('animal/new.html');
+    }
+
+    
+    static public function create() {
+        $species = $_POST['species'];
+        $country = $_POST['country'];
+
+        $animalQuery = new AnimalQuery();
+
+        $animalQuery->createOne($species, $country);
+        self::listAll();
+    }
+    
+    static public function update($id) {
+        $species = $_POST['species'];
+        $country = $_POST['country'];
+
+        $animalQuery = new AnimalQuery();
+
+        $animalQuery->updateOne($species, $country, $id);
+        self::listAll();
+    }
+
+    static public function edit($id) : void {
+        $animal = self::listOne($id);
+
+        echo self::getTwig()->render(
+            'animal/edit.html',
+            ['animal' => $animal]
+        );
     }
 };
 
