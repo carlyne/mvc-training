@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Bienvenue sur la page de l'animal {{ animal.id }}</h1>
+<p>voici les détails de l'animal :</p>
+
+<p>Espece : {{ animal.species }}</p>
+<p>Pays : {{ animal.country }} </p>
+
+{% endblock %}

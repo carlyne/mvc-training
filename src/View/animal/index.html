@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Bienvenue sur la page des animaux</h1>
+<p>voici tous les animaux existants :</p>
+
+<ul>
+    {% for animal in animals %}
+        <li>{{ animal.species }} (origine: {{ animal.country }})</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
