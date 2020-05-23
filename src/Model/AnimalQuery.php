@@ -5,13 +5,10 @@ use PDO;
 
 class AnimalQuery extends SelectQuery
 {
-    /** var SelectQuery */
-    // private $_selectQuery;
 
     public function __construct(string $tableName, array $tableFields = ['*'])
     {   
         parent::__construct($tableName, $tableFields);
-        // $this->_selectQuery = new SelectQuery($tableName, $tableFields);
     }
 
     public function getPdo() : PDO 
@@ -22,11 +19,12 @@ class AnimalQuery extends SelectQuery
         ]);
     }
 
-    public function findOne(int $id) : Animal 
+    public function findOne(int $id) : ?Animal 
     {
         $bdd = $this->getPdo();
 
-        $query = 'SELECT * FROM animal WHERE id = :id';
+        $query = $this->where('id', ':id')->createQuery();
+        
         $statement = $bdd->prepare($query);
         $statement->execute([
             ':id' => $id

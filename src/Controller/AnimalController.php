@@ -9,12 +9,12 @@ use App\Model\AnimalQuery;
 
 class AnimalController extends AbstractController {
 
-    static public function listOne($id) : Animal {
-        $animalQuery = new AnimalQuery('animal', $id);
+    static public function listOne(int $id) : Animal {
+        $animalQuery = new AnimalQuery('animal');
         return $animalQuery->findOne($id);
     }
 
-    static public function show($id) : void {
+    static public function show(int $id) : void {
         $animal = self::listOne($id);
 
         echo self::getTwig()->render(
@@ -41,7 +41,7 @@ class AnimalController extends AbstractController {
         $species = $_POST['species'];
         $country = $_POST['country'];
 
-        $animalQuery = new AnimalQuery();
+        $animalQuery = new AnimalQuery('animal');
 
         $animalQuery->createOne($species, $country);
         self::listAll();
@@ -51,7 +51,7 @@ class AnimalController extends AbstractController {
         $species = $_POST['species'];
         $country = $_POST['country'];
 
-        $animalQuery = new AnimalQuery();
+        $animalQuery = new AnimalQuery('animal');
 
         $animalQuery->updateOne($species, $country, $id);
         self::listAll();
