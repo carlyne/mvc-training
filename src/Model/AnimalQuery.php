@@ -65,10 +65,8 @@ class AnimalQuery extends HandleQuery
     public function createOne(string $species, string $country)
     {
         $bdd = $this->getPdo();
-
         $query = $this->insertValues(['species', 'country'], [':species', ':country'])->createPostQuery();
 
-        var_dump($query);
         $statement = $bdd->prepare($query);
 
         return $statement->execute([
