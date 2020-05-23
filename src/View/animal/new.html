@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Creer un animal</h1>
+
+<form action="{{ base_path ~ '/animal/create' }}" method="POST">
+    <label for="species">Espèce :</label>
+    <input type="text" name="species" id="species">
+
+    <label for="country"> Pays d'origine :</label>
+    <input type="text" name="country" id="country">
+
+    <button type="submit">Créer</button>
+</form>
+
+<a href="{{ base_path ~ '/' }}">Retour à l'accueil</a>
+
+{% endblock %}

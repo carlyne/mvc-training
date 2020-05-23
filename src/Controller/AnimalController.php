@@ -47,7 +47,7 @@ class AnimalController extends AbstractController {
         self::listAll();
     }
     
-    static public function update($id) {
+    static public function update(int $id) {
         $species = $_POST['species'];
         $country = $_POST['country'];
 
@@ -57,7 +57,7 @@ class AnimalController extends AbstractController {
         self::listAll();
     }
 
-    static public function edit($id) : void {
+    static public function edit(int $id) : void {
         $animal = self::listOne($id);
 
         echo self::getTwig()->render(

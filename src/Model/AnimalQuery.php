@@ -3,7 +3,7 @@
 namespace App\Model;
 use PDO;
 
-class AnimalQuery extends SelectQuery
+class AnimalQuery extends HandleQuery
 {
 
     public function __construct(string $tableName, array $tableFields = ['*'])
@@ -23,7 +23,7 @@ class AnimalQuery extends SelectQuery
     {
         $bdd = $this->getPdo();
 
-        $query = $this->where('id', ':id')->createQuery();
+        $query = $this->where('id', ':id')->createSelectQuery();
         
         $statement = $bdd->prepare($query);
         $statement->execute([
@@ -36,13 +36,13 @@ class AnimalQuery extends SelectQuery
             return null;
         }
 
-        return new Animal((int) $animalData['id'], $animalData['species'], $animalData['country']);
+        return new Animal( $animalData['id'], $animalData['species'], $animalData['country']);
     }
 
-    public function findAll() : array 
+    public function findAll() : ?array 
     {
         $bdd = $this->getPdo();
-        $query = $this->createQuery();
+        $query = $this->createSelectQuery();
 
         $statement = $bdd->prepare($query);
         $statement->execute();
@@ -55,7 +55,7 @@ class AnimalQuery extends SelectQuery
 
         $animalObject = [];
         foreach($data as $animalData) {
-            $animalObject[] = new Animal((int) $animalData['id'], $animalData['species'], $animalData['country']);
+            $animalObject[] = new Animal( $animalData['id'], $animalData['species'], $animalData['country']);
         }
 
         return $animalObject;
