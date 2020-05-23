@@ -23,7 +23,7 @@ class AnimalQuery extends HandleQuery
     {
         $bdd = $this->getPdo();
 
-        $query = $this->where('id', ':id')->createSelectQuery();
+        $query = $this->where('id', ':id')->createGetQuery();
         
         $statement = $bdd->prepare($query);
         $statement->execute([
@@ -42,7 +42,7 @@ class AnimalQuery extends HandleQuery
     public function findAll() : ?array 
     {
         $bdd = $this->getPdo();
-        $query = $this->createSelectQuery();
+        $query = $this->createGetQuery();
 
         $statement = $bdd->prepare($query);
         $statement->execute();
@@ -66,8 +66,11 @@ class AnimalQuery extends HandleQuery
     {
         $bdd = $this->getPdo();
 
-        $query = 'INSERT INTO animal (species, country) VALUES(:species, :country)';
+        $query = $this->insertValues(['species', 'country'], [':species', ':country'])->createPostQuery();
+
+        var_dump($query);
         $statement = $bdd->prepare($query);
+
         return $statement->execute([
             ':species' => $species,
             ':country' => $country

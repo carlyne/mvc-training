@@ -10,6 +10,8 @@ abstract class HandleQuery
     protected $_tableFields = ['*'];
     /** var array */
     protected $_condition = [];
+    /** var array */
+    protected $_inserts = [];
     
     public function __construct(string $tableName, array $tableFields = ['*'])
     {
@@ -27,14 +29,36 @@ abstract class HandleQuery
         return $this;
     }
 
-    public function createSelectQuery() : string
+    public function insertValues(array $columns, array $values) : self
     {
-        $query = 'SELECT ' . implode(',', $this->_tableFields) . ' FROM ' . $this->_tableName . ' ';
+        $this->_inserts = [
+            'columns' => $columns,
+            'values' => $values
+        ];
+
+        return $this;
+    }
+
+    public function createGetQuery() : string
+    {
+        $query = 'SELECT ' . implode(', ', $this->_tableFields) . ' FROM ' . $this->_tableName . ' ';
 
         if(!empty($this->_condition)) {
             $query .= 'WHERE ' . $this->_condition['condition'] . ' = ' . $this->_condition['value'];
         };
         
+        return $query;
+    }
+
+    public function createPostQuery() : string
+    {   
+        $query = 'INSERT INTO ' . $this->_tableName . ' ';
+
+        $insertColumns = implode(', ', $this->_inserts['columns']);
+        $insertValues = implode(', ', $this->_inserts['values']);
+
+        $query .= '(' . $insertColumns . ') VALUES (' . $insertValues . ') ';
+
         return $query;
     }
 

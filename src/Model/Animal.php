@@ -30,11 +30,11 @@ class Animal {
     }
 
     public function getSpecies() : string {
-        return $this->_species;
+        return ucfirst($this->_species);
     }
 
     public function getCountry() : string {
-        return $this->_country;
+        return ucfirst($this->_country);
     }
 
     public function setId(int $id) : self {
